@@ -4,12 +4,14 @@ import Header from '../header';
 import theme from '../../chakra/theme';
 
 import './App.css';
+import ImageList from '../imageList';
 
 function App() {
   return (
     <ChakraProvider theme={theme}>
       <Box className="App">
         <Header />
+        <ImageList />
       </Box>
     </ChakraProvider>
   );
