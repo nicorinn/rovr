@@ -29,8 +29,29 @@ describe('<ImageCard />', () => {
     screen.getByText(/fhaz/i);
   });
 
+  test('displays date', () => {
+    render(<ImageCard {...testImage} />);
+    screen.getByText(/2022-01-16/i);
+  });
+
   test('displays alt text', () => {
     render(<ImageCard {...testImage} />);
     screen.getByAltText(/nasa image/i);
+  });
+
+  test('displays like button', () => {
+    render(<ImageCard {...testImage} />);
+    screen.getByRole('button', { name: /like-921146/i });
+  });
+
+  test('like button is toggled on click', async () => {
+    render(<ImageCard {...testImage} />);
+    const likeButton = screen.getByRole('button', { name: /like-921146/i });
+    screen.getByRole('img', { name: /unstarred icon/i });
+
+    likeButton.click();
+    await screen.findByRole('img', { name: /^starred icon/i });
+    likeButton.click();
+    await screen.findByRole('img', { name: /unstarred icon/i });
   });
 });

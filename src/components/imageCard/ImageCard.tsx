@@ -5,9 +5,6 @@ import { RoverImage } from '../../common/types';
 import { toggleLike } from '../../redux/likeSlice';
 import { RootState } from '../../redux/store';
 
-const unlikedStar = <Icon as={BsStar} boxSize="3em" />;
-const likedStar = <Icon as={BsStar} boxSize="3em" />;
-
 const ImageCard: React.FC<RoverImage> = ({
   id,
   img_src,
@@ -32,7 +29,7 @@ const ImageCard: React.FC<RoverImage> = ({
           <Text fontSize={22} color="white">
             {camera.name}
           </Text>
-          <Text fontSize={22} color="white">
+          <Text fontSize={16} color="white">
             {earth_date}
           </Text>
         </Box>
@@ -44,8 +41,23 @@ const ImageCard: React.FC<RoverImage> = ({
           onClick={likeChangeHandler}
           aria-label={`like-${id}`}
         >
-          {!isLiked && <Icon as={BsStar} boxSize="2.5em" />}
-          {isLiked && <Icon as={BsStarFill} boxSize="2.5em" color="red" />}
+          {!isLiked && (
+            <Icon
+              as={BsStar}
+              boxSize="2.5em"
+              role="img"
+              aria-label="unstarred icon"
+            />
+          )}
+          {isLiked && (
+            <Icon
+              as={BsStarFill}
+              boxSize="2.5em"
+              color="red"
+              role="img"
+              aria-label="starred icon"
+            />
+          )}
         </Button>
       </Flex>
     </Box>
