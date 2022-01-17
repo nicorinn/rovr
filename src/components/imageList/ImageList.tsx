@@ -17,7 +17,7 @@ function displayImages(images: RoverImage[]) {
   });
 }
 
-const ImageList = () => {
+const ImageList: React.FC = () => {
   const [images, setImages] = useState<RoverImage[]>([]);
 
   useEffect(() => {

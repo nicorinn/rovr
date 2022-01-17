@@ -1,10 +1,13 @@
-import { Box, Center, Image, Text } from '@chakra-ui/react';
+import { Box, Button, Flex, Icon, Image, Spacer, Text } from '@chakra-ui/react';
+import { BsStar } from 'react-icons/bs';
 
 interface ImageCardProps {
   src: string;
   alt?: string;
   caption: string;
 }
+
+const unlikedStar = <Icon as={BsStar} boxSize="3em" />;
 
 const ImageCard: React.FC<ImageCardProps> = ({ src, alt, caption }) => {
   return (
@@ -15,13 +18,17 @@ const ImageCard: React.FC<ImageCardProps> = ({ src, alt, caption }) => {
         alt={alt || 'NASA image'}
         fit="scale-down"
       />
-      <Center>
+      <Flex align="center" mt={2}>
         <Box>
           <Text fontSize={22} color="white">
             {caption}
           </Text>
         </Box>
-      </Center>
+        <Spacer />
+        <Button size="lg" width="3em" variant="unstyled">
+          <Icon as={BsStar} boxSize="2.5em" />
+        </Button>
+      </Flex>
     </Box>
   );
 };
