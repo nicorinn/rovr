@@ -3,14 +3,17 @@ import {
   PayloadAction,
   SliceCaseReducers,
 } from '@reduxjs/toolkit';
+import { loadLikes } from './utils/localStorage';
 
 interface LikeState {
   [imageId: number]: boolean;
 }
 
+const savedLikes = loadLikes();
+
 const likeSlice = createSlice<LikeState, SliceCaseReducers<LikeState>>({
   name: 'likes',
-  initialState: {},
+  initialState: savedLikes,
   reducers: {
     setLikes: (state, action: PayloadAction<LikeState>) => {
       return action.payload;
