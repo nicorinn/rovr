@@ -10,6 +10,7 @@ const themeColors = {
     200: '#2E303E',
   },
   white: '#FAC29A',
+  red: '#E9436F',
 };
 
 const config: ThemeConfig = {
@@ -23,9 +24,7 @@ const theme = extendTheme({
     heading: 'IBM Plex Sans, sans-serif',
   },
   colors: themeColors,
-  components: {
-    Box: {},
-  },
+  components: { Button: { baseStyle: { _focus: { boxShadow: 'none' } } } },
 });
 
 export default theme;

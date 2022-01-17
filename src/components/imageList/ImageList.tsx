@@ -6,14 +6,7 @@ import ImageCard from '../imageCard';
 
 function displayImages(images: RoverImage[]) {
   return images.map((img) => {
-    return (
-      <ImageCard
-        key={img.id}
-        src={img.img_src}
-        alt={img.earth_date}
-        caption={img.rover.name}
-      />
-    );
+    return <ImageCard key={img.id} {...img} />;
   });
 }
 

@@ -3,13 +3,17 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './components/app';
 import reportWebVitals from './reportWebVitals';
+import { store } from './redux/store';
 import { ColorModeScript } from '@chakra-ui/react';
 import theme from './chakra/theme';
+import { Provider } from 'react-redux';
 
 ReactDOM.render(
   <React.StrictMode>
     <ColorModeScript initialColorMode={theme.config.initialColorMode} />
-    <App />
+    <Provider store={store}>
+      <App />
+    </Provider>
   </React.StrictMode>,
   document.getElementById('root')
 );
