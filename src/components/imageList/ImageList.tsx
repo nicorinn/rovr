@@ -1,6 +1,6 @@
 import { VStack } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
-import { getAllImages } from '../../api/marsRover.api';
+import { getLatestImages } from '../../api/marsRover.api';
 import { RoverImage } from '../../common/types';
 import ImageCard from '../imageCard';
 
@@ -22,12 +22,12 @@ const ImageList = () => {
 
   useEffect(() => {
     (async () => {
-      const api_images = await getAllImages();
+      const api_images = await getLatestImages();
       setImages(api_images);
     })();
   }, []);
 
-  return <VStack>{displayImages(images)}</VStack>;
+  return <VStack spacing={5}>{displayImages(images)}</VStack>;
 };
 
 export default ImageList;
