@@ -1,4 +1,5 @@
 import { Box, Button, Flex, Icon, Image, Spacer, Text } from '@chakra-ui/react';
+import { useEffect, useState } from 'react';
 import { BsStar, BsStarFill } from 'react-icons/bs';
 import { useDispatch, useSelector } from 'react-redux';
 import { RoverImage } from '../../common/types';
@@ -13,8 +14,15 @@ const ImageCard: React.FC<RoverImage> = ({
 }) => {
   const isLiked = useSelector((state: RootState) => state.likes[id]);
   const dispatch = useDispatch();
+  const [isLikePressed, setLikePressed] = useState(false);
 
   const likeChangeHandler = () => dispatch(toggleLike(id));
+
+  useEffect(() => {
+    setLikePressed(true);
+    const likePressedTimer = setTimeout(() => setLikePressed(false), 100);
+    return () => clearTimeout(likePressedTimer);
+  }, [isLiked]);
 
   return (
     <Box shadow="dark-lg" bgColor="gray.200" borderRadius="lg" p={5}>
@@ -44,18 +52,20 @@ const ImageCard: React.FC<RoverImage> = ({
           {!isLiked && (
             <Icon
               as={BsStar}
-              boxSize="2.5em"
+              boxSize={isLikePressed ? '3.7em' : '2.5em'}
               role="img"
               aria-label="unstarred icon"
+              transition="all 200ms ease-in-out"
             />
           )}
           {isLiked && (
             <Icon
               as={BsStarFill}
-              boxSize="2.5em"
+              boxSize={isLikePressed ? '3.7em' : '2.5em'}
               color="red"
               role="img"
               aria-label="starred icon"
+              transition="all 200ms ease-in-out"
             />
           )}
         </Button>
