@@ -10,7 +10,11 @@ const themeColors = {
     200: '#2E303E',
   },
   white: '#FAC29A',
-  red: '#E9436F',
+  red: {
+    800: '#E9436F',
+    400: '#E95379',
+    200: '#F43E5C',
+  },
 };
 
 const config: ThemeConfig = {

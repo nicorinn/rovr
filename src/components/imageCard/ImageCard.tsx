@@ -24,7 +24,7 @@ const ImageCard: React.FC<RoverImage> = ({
   const isLiked = useSelector((state: RootState) => state.likes[id]);
   const dispatch = useDispatch();
   const [isLikePressed, setLikePressed] = useState(false);
-  const [isLargerThan1280] = useMediaQuery('(min-width: 1280px)');
+  const [isLargerThan1024] = useMediaQuery('(min-width: 1024px)');
 
   const likeChangeHandler = () => dispatch(toggleLike(id));
 
@@ -37,10 +37,13 @@ const ImageCard: React.FC<RoverImage> = ({
   return (
     <Box shadow="dark-lg" bgColor="gray.200" borderRadius="lg" p={5}>
       <Image
-        boxSize={isLargerThan1280 ? 500 : '70vh'}
+        boxSize={isLargerThan1024 ? 500 : ''}
+        draggable={false}
         src={img_src}
         alt={'NASA image'}
         fit="scale-down"
+        borderRadius="lg"
+        shadow="dark-lg"
       />
       <Flex align="center" mt={2}>
         <Box>
@@ -72,7 +75,7 @@ const ImageCard: React.FC<RoverImage> = ({
             <Icon
               as={BsStarFill}
               boxSize={isLikePressed ? '3.7em' : '2.5em'}
-              color="red"
+              color="red.800"
               role="img"
               aria-label="starred icon"
               transition="all 200ms ease-in-out"

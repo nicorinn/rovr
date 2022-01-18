@@ -1,4 +1,4 @@
-import { VStack } from '@chakra-ui/react';
+import { useMediaQuery, VStack } from '@chakra-ui/react';
 import React, { useEffect, useRef, useState } from 'react';
 import { getLatestImages } from '../../api/marsRover.api';
 import { RoverImage } from '../../common/types';
@@ -12,6 +12,7 @@ const ImageList: React.FC = () => {
   const [offset, setOffset] = useState(0);
   const listRef = useRef<HTMLDivElement | null>(null);
   const { scrollY } = useViewportScroll();
+  const [isLargerThan1024] = useMediaQuery('(min-width: 1024px)');
 
   // The yProgess value ranges from 0 to 1
   // Each image is approximately 1/nth of the page
@@ -37,10 +38,12 @@ const ImageList: React.FC = () => {
   );
 
   useEffect(() => {
-    window.scrollTo({
-      top: imageSpace * selectedIndex,
-    });
-  }, [selectedIndex, images.length, imageSpace]);
+    if (isLargerThan1024) {
+      window.scrollTo({
+        top: imageSpace * selectedIndex,
+      });
+    }
+  }, [selectedIndex, images.length, imageSpace, isLargerThan1024]);
 
   const selectedStyle = {
     scale: 1,
@@ -52,7 +55,7 @@ const ImageList: React.FC = () => {
 
   const unselectedStyle = {
     scale: 0.5,
-    opacity: 0.5,
+    opacity: 0,
     transition: 'all 200ms ease-in-out',
   };
 
@@ -73,7 +76,7 @@ const ImageList: React.FC = () => {
   }, []);
 
   return (
-    <VStack spacing={10} mb={10} ref={listRef}>
+    <VStack spacing={0} mb={10} ref={listRef}>
       {displayImages}
     </VStack>
   );
