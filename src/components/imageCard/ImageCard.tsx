@@ -1,4 +1,13 @@
-import { Box, Button, Flex, Icon, Image, Spacer, Text } from '@chakra-ui/react';
+import {
+  Box,
+  Button,
+  Flex,
+  Icon,
+  Image,
+  Spacer,
+  Text,
+  useMediaQuery,
+} from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { BsStar, BsStarFill } from 'react-icons/bs';
 import { useDispatch, useSelector } from 'react-redux';
@@ -15,6 +24,7 @@ const ImageCard: React.FC<RoverImage> = ({
   const isLiked = useSelector((state: RootState) => state.likes[id]);
   const dispatch = useDispatch();
   const [isLikePressed, setLikePressed] = useState(false);
+  const [isLargerThan1280] = useMediaQuery('(min-width: 1280px)');
 
   const likeChangeHandler = () => dispatch(toggleLike(id));
 
@@ -27,7 +37,7 @@ const ImageCard: React.FC<RoverImage> = ({
   return (
     <Box shadow="dark-lg" bgColor="gray.200" borderRadius="lg" p={5}>
       <Image
-        boxSize="500px"
+        boxSize={isLargerThan1280 ? 500 : '70vh'}
         src={img_src}
         alt={'NASA image'}
         fit="scale-down"

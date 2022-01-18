@@ -24,7 +24,7 @@ const ImageList: React.FC = () => {
   useEffect(
     () =>
       scrollY.onChange((y) => {
-        if (imageSpace && y !== 0) {
+        if (imageSpace) {
           const centeredImgIndex = Math.round(y / imageSpace);
           if (selectedIndex !== centeredImgIndex) {
             setSelectedIndex(centeredImgIndex);
@@ -37,7 +37,6 @@ const ImageList: React.FC = () => {
   );
 
   useEffect(() => {
-    console.log(selectedIndex);
     window.scrollTo({
       top: imageSpace * selectedIndex,
     });
@@ -61,7 +60,6 @@ const ImageList: React.FC = () => {
     <motion.div
       key={img.id}
       style={selectedIndex === index ? selectedStyle : unselectedStyle}
-      transition={{ ease: 'easeOut', duration: 1 }}
     >
       <ImageCard {...img} />
     </motion.div>
