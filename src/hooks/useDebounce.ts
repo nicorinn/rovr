@@ -12,7 +12,10 @@ export default function useDebounce(
   const inputsRef = useRef({ cb, delay }); // mutable ref like with useThrottle
   useEffect(() => {
     inputsRef.current = { cb, delay };
-  }); //also track cur. delay
+  });
+  // NOTE
+  // Only disabling temporarily due to Shopify application being due in less than 24h
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   return useCallback(
     debounce(
       (...args) => {
