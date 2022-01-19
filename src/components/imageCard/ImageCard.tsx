@@ -11,7 +11,7 @@ import {
 import { useEffect, useState } from 'react';
 import { BsStar, BsStarFill } from 'react-icons/bs';
 import { useDispatch, useSelector } from 'react-redux';
-import { RoverImage } from '../../common/types';
+import { RoverImage, Waypoint } from '../../common/types';
 import { toggleLike } from '../../redux/likeSlice';
 import { RootState } from '../../redux/store';
 
@@ -20,19 +20,54 @@ const ImageCard: React.FC<RoverImage> = ({
   img_src,
   earth_date,
   camera,
+  sol,
 }) => {
   const isLiked = useSelector((state: RootState) => state.likes[id]);
+  const waypoints = useSelector((state: RootState) => state.waypoints);
   const dispatch = useDispatch();
   const [isLikePressed, setLikePressed] = useState(false);
   const [isLargerThan768] = useMediaQuery('(min-width: 768px)');
+  const [coords, setCoords] = useState<{ x: number; y: number } | null>(null);
 
-  const likeChangeHandler = () => dispatch(toggleLike(id));
+  useEffect(() => {
+    if (!coords && waypoints.length) {
+      const nearestWp = waypoints.reduce(
+        (prev, current) => findNearestWaypoint(prev, current, sol),
+        waypoints[0]
+      );
+      const wpCoords = nearestWp.geometry.coordinates;
+      setCoords({ x: wpCoords[0], y: wpCoords[1] });
+    }
+  }, [coords, waypoints, sol]);
 
   useEffect(() => {
     setLikePressed(true);
     const likePressedTimer = setTimeout(() => setLikePressed(false), 100);
     return () => clearTimeout(likePressedTimer);
   }, [isLiked]);
+
+  /**
+   * Reducer - Finds the waypoint with the nearest sol to when the image was taken
+   * @param nearest Accumulator value
+   * @param next Next value
+   * @param targetSol Target sol date
+   * @returns Waypoint that is temporally closest to the image
+   */
+  function findNearestWaypoint(
+    nearest: Waypoint,
+    next: Waypoint,
+    targetSol: number
+  ) {
+    const nextSol = next.properties.sol;
+    const nearestSol = nearest.properties.sol;
+    if (Math.abs(nextSol - targetSol) <= Math.abs(nearestSol - targetSol)) {
+      return next;
+    } else {
+      return nearest;
+    }
+  }
+
+  const likeChangeHandler = () => dispatch(toggleLike(id));
 
   return (
     <Box shadow="dark-lg" bgColor="gray.200" borderRadius="lg" p={5}>

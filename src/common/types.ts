@@ -22,7 +22,7 @@ export interface RoverImage {
   rover: Rover;
 }
 
-type Coordinate = [number, number];
+type WaypointCoordinate = [number, number];
 
 export interface Waypoint {
   type: string;
@@ -34,5 +34,5 @@ export interface Waypoint {
     dist_mi: number;
     drivetype: string;
   };
-  geometry: { type: string; coordinates: Coordinate };
+  geometry: { type: string; coordinates: WaypointCoordinate };
 }
