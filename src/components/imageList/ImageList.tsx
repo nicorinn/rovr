@@ -4,7 +4,6 @@ import { getLatestImages } from '../../api/marsRover.api';
 import { RoverImage } from '../../common/types';
 import { motion, useViewportScroll } from 'framer-motion';
 import ImageCard from '../imageCard';
-import { throttle } from 'lodash';
 
 const ImageList: React.FC = () => {
   const [images, setImages] = useState<RoverImage[]>([]);
@@ -13,7 +12,7 @@ const ImageList: React.FC = () => {
   const [offset, setOffset] = useState(0);
   const listRef = useRef<HTMLDivElement | null>(null);
   const { scrollY } = useViewportScroll();
-  const [isLargerThan1024] = useMediaQuery('(min-width: 1024px)');
+  const [isLargerThan768] = useMediaQuery('(min-width: 768px)');
 
   const keyPressHandler = useCallback(
     (e: KeyboardEvent) => {
@@ -68,12 +67,12 @@ const ImageList: React.FC = () => {
   );
 
   useEffect(() => {
-    if (isLargerThan1024) {
+    if (isLargerThan768) {
       window.scrollTo({
         top: imageSpace * selectedIndex,
       });
     }
-  }, [selectedIndex, images.length, imageSpace, isLargerThan1024]);
+  }, [selectedIndex, images.length, imageSpace, isLargerThan768]);
 
   const selectedStyle = {
     scale: 1,
