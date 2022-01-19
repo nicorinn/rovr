@@ -36,15 +36,16 @@ const ImageCard: React.FC<RoverImage> = ({
 
   return (
     <Box shadow="dark-lg" bgColor="gray.200" borderRadius="lg" p={5}>
-      <Image
-        boxSize={isLargerThan768 ? 500 : ''}
-        draggable={false}
-        src={img_src}
-        alt={'NASA image'}
-        fit="scale-down"
-        borderRadius="lg"
-        shadow="dark-lg"
-      />
+      <Box width={isLargerThan768 ? 500 : ''} height="70vh">
+        <Image
+          draggable={false}
+          src={img_src}
+          alt={'NASA image'}
+          fit="scale-down"
+          borderRadius="lg"
+          shadow="dark-lg"
+        />
+      </Box>
       <Flex align="center" mt={2}>
         <Box>
           <Text fontSize={22} color="white">
@@ -66,6 +67,7 @@ const ImageCard: React.FC<RoverImage> = ({
             <Icon
               as={BsStar}
               boxSize={isLikePressed ? '3.7em' : '2.5em'}
+              color="gray.50"
               role="img"
               aria-label="unstarred icon"
               transition="all 200ms ease-in-out"
