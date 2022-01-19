@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setWaypoints } from '../../redux/waypointSlice';
 import { RootState } from '../../redux/store';
 import { setImages } from '../../redux/imageSlice';
+import useDebounce from '../../hooks/useDebounce';
 
 const ImageList: React.FC = () => {
   const dispatch = useDispatch();
@@ -19,6 +20,13 @@ const ImageList: React.FC = () => {
   const listRef = useRef<HTMLDivElement | null>(null);
   const { scrollY } = useViewportScroll();
   const [isLargerThan768] = useMediaQuery('(min-width: 768px)');
+
+  const debounceRepositionSelected = useDebounce(() => {
+    window.scrollTo({
+      top: imageSpace * selectedIndex,
+    });
+    setOffset(scrollY.get() - selectedIndex * imageSpace);
+  });
 
   const keyPressHandler = useCallback(
     (e: KeyboardEvent) => {
@@ -74,20 +82,18 @@ const ImageList: React.FC = () => {
           if (selectedIndex !== centeredImgIndex) {
             setSelectedIndex(centeredImgIndex);
           } else {
-            setOffset(y - selectedIndex * imageSpace);
+            debounceRepositionSelected();
           }
         }
       }),
-    [scrollY, images.length, selectedIndex, imageSpace]
+    [
+      scrollY,
+      images.length,
+      selectedIndex,
+      imageSpace,
+      debounceRepositionSelected,
+    ]
   );
-
-  useEffect(() => {
-    if (isLargerThan768) {
-      window.scrollTo({
-        top: imageSpace * selectedIndex,
-      });
-    }
-  }, [selectedIndex, images.length, imageSpace, isLargerThan768]);
 
   const selectedStyle = {
     scale: 1,
@@ -97,7 +103,7 @@ const ImageList: React.FC = () => {
   };
 
   const unselectedStyle = {
-    scale: 0.5,
+    scale: isLargerThan768 ? 0.5 : 1,
     opacity: 0,
     transition: 'all 200ms ease-in-out',
   };
