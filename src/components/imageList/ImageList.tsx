@@ -1,13 +1,18 @@
 import { useMediaQuery, VStack } from '@chakra-ui/react';
 import React, { useEffect, useRef, useState, useCallback } from 'react';
 import { getLatestImages } from '../../api/roverPhotos.api';
-import { RoverImage } from '../../common/types';
 import { motion, useViewportScroll } from 'framer-motion';
 import ImageCard from '../imageCard';
 import { getWaypoints } from '../../api/nasaMsl.api';
+import { useDispatch, useSelector } from 'react-redux';
+import { setWaypoints } from '../../redux/waypointSlice';
+import { RootState } from '../../redux/store';
+import { setImages } from '../../redux/imageSlice';
 
 const ImageList: React.FC = () => {
-  const [images, setImages] = useState<RoverImage[]>([]);
+  const dispatch = useDispatch();
+  const waypoints = useSelector((state: RootState) => state.waypoints);
+  const images = useSelector((state: RootState) => state.images);
   const [selectedIndex, setSelectedIndex] = useState<number>(0);
   const [imageSpace, setImageSpace] = useState(0);
   const [offset, setOffset] = useState(0);
@@ -33,11 +38,13 @@ const ImageList: React.FC = () => {
   );
 
   useEffect(() => {
-    (async () => {
-      const waypoints = await getWaypoints();
-      console.log(waypoints);
-    })();
-  });
+    if (!waypoints.length) {
+      (async () => {
+        const waypoints = await getWaypoints();
+        dispatch(setWaypoints(waypoints));
+      })();
+    }
+  }, [dispatch, waypoints.length]);
 
   useEffect(() => {
     document.addEventListener('keyup', keyPressHandler);
@@ -47,9 +54,9 @@ const ImageList: React.FC = () => {
   useEffect(() => {
     (async () => {
       const api_images = await getLatestImages();
-      setImages(api_images);
+      dispatch(setImages(api_images));
     })();
-  }, []);
+  }, [dispatch]);
 
   // The yProgess value ranges from 0 to 1
   // Each image is approximately 1/nth of the page

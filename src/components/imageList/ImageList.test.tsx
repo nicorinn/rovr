@@ -1,8 +1,7 @@
-import { waitFor } from '@testing-library/react';
 import { render, screen, fireEvent } from '../../test-utils';
 import ImageList from './ImageList';
 
-jest.mock('../../api/marsRover.api', () => {
+jest.mock('../../api/roverPhotos.api', () => {
   const testImage = {
     id: 921146,
     sol: 3358,
