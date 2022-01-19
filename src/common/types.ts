@@ -21,3 +21,18 @@ export interface RoverImage {
   earth_date: string;
   rover: Rover;
 }
+
+type Coordinate = [number, number];
+
+export interface Waypoint {
+  type: string;
+  properties: {
+    sol: number;
+    yaw_deg: number;
+    site_pos: number;
+    dist_km: number;
+    dist_mi: number;
+    drivetype: string;
+  };
+  geometry: { type: string; coordinates: Coordinate };
+}

@@ -1,9 +1,10 @@
 import { useMediaQuery, VStack } from '@chakra-ui/react';
 import React, { useEffect, useRef, useState, useCallback } from 'react';
-import { getLatestImages } from '../../api/marsRover.api';
+import { getLatestImages } from '../../api/roverPhotos.api';
 import { RoverImage } from '../../common/types';
 import { motion, useViewportScroll } from 'framer-motion';
 import ImageCard from '../imageCard';
+import { getWaypoints } from '../../api/nasaMsl.api';
 
 const ImageList: React.FC = () => {
   const [images, setImages] = useState<RoverImage[]>([]);
@@ -30,6 +31,13 @@ const ImageList: React.FC = () => {
     },
     [images.length, selectedIndex]
   );
+
+  useEffect(() => {
+    (async () => {
+      const waypoints = await getWaypoints();
+      console.log(waypoints);
+    })();
+  });
 
   useEffect(() => {
     document.addEventListener('keyup', keyPressHandler);

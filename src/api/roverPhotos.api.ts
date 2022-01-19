@@ -25,6 +25,7 @@ export async function getAllImages() {
   if (res.status === 200) {
     return res.data.photos;
   } else {
+    console.error(res.statusText);
     return [];
   }
 }
@@ -34,6 +35,7 @@ export async function getLatestImages() {
   if (res.status === 200) {
     return res.data.latest_photos;
   } else {
+    console.error(res.statusText);
     return [];
   }
 }
