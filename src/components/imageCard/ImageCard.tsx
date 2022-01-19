@@ -24,7 +24,7 @@ const ImageCard: React.FC<RoverImage> = (image) => {
   const [isLikePressed, setLikePressed] = useState(false);
   const [isLargerThan768] = useMediaQuery('(min-width: 768px)');
   const [nearestWaypoint, setNearestWaypoint] = useState<Waypoint | null>(null);
-  const [mapView, setMapView] = useState(true);
+  const [mapView, setMapView] = useState(false);
 
   useEffect(() => {
     if (!nearestWaypoint && waypoints.length) {
@@ -70,13 +70,14 @@ const ImageCard: React.FC<RoverImage> = (image) => {
       <Flex align="center" mt={2}>
         <Box>
           <Text fontSize={22} color="white">
-            {image.camera.name}
+            {image.camera.full_name}
           </Text>
           <Text fontSize={16} color="white">
             {image.earth_date}
           </Text>
         </Box>
         <Spacer />
+        <Flex></Flex>
         <Button
           size="lg"
           width="3em"
@@ -87,6 +88,8 @@ const ImageCard: React.FC<RoverImage> = (image) => {
           {!mapView && (
             <Icon
               as={BsPinMapFill}
+              mt="0.3em"
+              boxSize={'2em'}
               color="gray.50"
               role="img"
               aria-label="map icon"
@@ -95,6 +98,8 @@ const ImageCard: React.FC<RoverImage> = (image) => {
           {mapView && (
             <Icon
               as={BsImage}
+              mt="0.3em"
+              boxSize={'2em'}
               color="gray.50"
               role="img"
               aria-label="image icon"

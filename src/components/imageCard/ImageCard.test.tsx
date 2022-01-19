@@ -26,7 +26,7 @@ const testImage = {
 describe('<ImageCard />', () => {
   test('displays caption', () => {
     render(<ImageCard {...testImage} />);
-    screen.getByText(/fhaz/i);
+    screen.getByText(/Front Hazard Avoidance Camera/i);
   });
 
   test('displays date', () => {
