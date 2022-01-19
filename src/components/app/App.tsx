@@ -11,7 +11,9 @@ function App() {
     <ChakraProvider theme={theme}>
       <Box className="App">
         <Header />
-        <ImageList />
+        <Box as="main" pt="80px">
+          <ImageList />
+        </Box>
       </Box>
     </ChakraProvider>
   );

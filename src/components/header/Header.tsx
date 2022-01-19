@@ -2,7 +2,16 @@ import { Box, Flex, Heading } from '@chakra-ui/react';
 
 const Header = () => {
   return (
-    <Flex p={2} mb={4} align="center">
+    <Flex
+      as="header"
+      p={2}
+      align="center"
+      position="fixed"
+      width="100%"
+      height="70px"
+      bgColor="black"
+      zIndex={9999}
+    >
       <Box>
         <Heading color="white">ROVR</Heading>
       </Box>
