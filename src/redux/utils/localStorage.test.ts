@@ -1,7 +1,11 @@
+import { RootState } from '../store';
 import { loadLikes, saveLikes } from './localStorage';
 
-const testState = { likes: { 1: true }, waypoints: [], images: [] };
-
+const testState: RootState = {
+  likes: {},
+  waypoints: [],
+  images: { imageList: [], selectedIndex: 0 },
+};
 describe('saveLikes', () => {
   test('saves likes to localStorage', () => {
     const setItem = jest.spyOn(Storage.prototype, 'setItem');

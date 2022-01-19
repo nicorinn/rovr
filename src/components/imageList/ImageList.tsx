@@ -7,14 +7,16 @@ import { getWaypoints } from '../../api/nasaMsl.api';
 import { useDispatch, useSelector } from 'react-redux';
 import { setWaypoints } from '../../redux/waypointSlice';
 import { RootState } from '../../redux/store';
-import { setImages } from '../../redux/imageSlice';
+import { setImages, setSelectedIndex } from '../../redux/imageSlice';
 import useDebounce from '../../hooks/useDebounce';
 
 const ImageList: React.FC = () => {
   const dispatch = useDispatch();
   const waypoints = useSelector((state: RootState) => state.waypoints);
-  const images = useSelector((state: RootState) => state.images);
-  const [selectedIndex, setSelectedIndex] = useState<number>(0);
+  const images = useSelector((state: RootState) => state.images.imageList);
+  const selectedIndex = useSelector(
+    (state: RootState) => state.images.selectedIndex
+  );
   const [imageSpace, setImageSpace] = useState(0);
   const [offset, setOffset] = useState(0);
   const listRef = useRef<HTMLDivElement | null>(null);
@@ -33,16 +35,20 @@ const ImageList: React.FC = () => {
       e.stopPropagation();
       e.preventDefault();
       if (e.key === 'ArrowDown') {
-        setSelectedIndex(
-          selectedIndex === images.length ? selectedIndex : selectedIndex + 1
+        dispatch(
+          setSelectedIndex(
+            selectedIndex === images.length ? selectedIndex : selectedIndex + 1
+          )
         );
       } else if (e.key === 'ArrowUp') {
-        setSelectedIndex(
-          selectedIndex === 0 ? selectedIndex : selectedIndex - 1
+        dispatch(
+          setSelectedIndex(
+            selectedIndex === 0 ? selectedIndex : selectedIndex - 1
+          )
         );
       }
     },
-    [images.length, selectedIndex]
+    [dispatch, images.length, selectedIndex]
   );
 
   useEffect(() => {
@@ -80,19 +86,13 @@ const ImageList: React.FC = () => {
         if (imageSpace) {
           const centeredImgIndex = Math.round(y / imageSpace);
           if (selectedIndex !== centeredImgIndex) {
-            setSelectedIndex(centeredImgIndex);
+            dispatch(setSelectedIndex(centeredImgIndex));
           } else {
             debounceRepositionSelected();
           }
         }
       }),
-    [
-      scrollY,
-      images.length,
-      selectedIndex,
-      imageSpace,
-      debounceRepositionSelected,
-    ]
+    [scrollY, selectedIndex, imageSpace, debounceRepositionSelected, dispatch]
   );
 
   const selectedStyle = {

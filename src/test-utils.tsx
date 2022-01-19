@@ -7,7 +7,11 @@ import likeSlice from './redux/likeSlice';
 import waypointSlice from './redux/waypointSlice';
 import imageSlice from './redux/imageSlice';
 
-const initialState: RootState = { likes: {}, waypoints: [], images: [] };
+const initialState: RootState = {
+  likes: {},
+  waypoints: [],
+  images: { imageList: [], selectedIndex: 0 },
+};
 
 function render(
   ui: ReactElement,

@@ -5,16 +5,24 @@ import {
 } from '@reduxjs/toolkit';
 import { RoverImage } from '../common/types';
 
-const imageSlice = createSlice<RoverImage[], SliceCaseReducers<RoverImage[]>>({
+interface ImageState {
+  imageList: RoverImage[];
+  selectedIndex: number;
+}
+
+const imageSlice = createSlice<ImageState, SliceCaseReducers<ImageState>>({
   name: 'images',
-  initialState: [],
+  initialState: { imageList: [], selectedIndex: 0 },
   reducers: {
     setImages: (state, action: PayloadAction<RoverImage[]>) => {
-      return action.payload;
+      return { ...state, imageList: action.payload };
+    },
+    setSelectedIndex: (state, action: PayloadAction<number>) => {
+      return { ...state, selectedIndex: action.payload };
     },
   },
 });
 
-export const { setImages } = imageSlice.actions;
+export const { setImages, setSelectedIndex } = imageSlice.actions;
 
 export default imageSlice.reducer;
