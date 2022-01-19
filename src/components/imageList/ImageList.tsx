@@ -1,9 +1,10 @@
 import { useMediaQuery, VStack } from '@chakra-ui/react';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, useCallback } from 'react';
 import { getLatestImages } from '../../api/marsRover.api';
 import { RoverImage } from '../../common/types';
 import { motion, useViewportScroll } from 'framer-motion';
 import ImageCard from '../imageCard';
+import { throttle } from 'lodash';
 
 const ImageList: React.FC = () => {
   const [images, setImages] = useState<RoverImage[]>([]);
@@ -13,6 +14,35 @@ const ImageList: React.FC = () => {
   const listRef = useRef<HTMLDivElement | null>(null);
   const { scrollY } = useViewportScroll();
   const [isLargerThan1024] = useMediaQuery('(min-width: 1024px)');
+
+  const keyPressHandler = useCallback(
+    (e: KeyboardEvent) => {
+      e.stopPropagation();
+      e.preventDefault();
+      if (e.key === 'ArrowDown') {
+        setSelectedIndex(
+          selectedIndex === images.length ? selectedIndex : selectedIndex + 1
+        );
+      } else if (e.key === 'ArrowUp') {
+        setSelectedIndex(
+          selectedIndex === 0 ? selectedIndex : selectedIndex - 1
+        );
+      }
+    },
+    [images.length, selectedIndex]
+  );
+
+  useEffect(() => {
+    document.addEventListener('keyup', keyPressHandler);
+    return () => document.removeEventListener('keyup', keyPressHandler);
+  }, [keyPressHandler]);
+
+  useEffect(() => {
+    (async () => {
+      const api_images = await getLatestImages();
+      setImages(api_images);
+    })();
+  }, []);
 
   // The yProgess value ranges from 0 to 1
   // Each image is approximately 1/nth of the page
@@ -50,7 +80,6 @@ const ImageList: React.FC = () => {
     opacity: 1,
     transition: 'all 200ms ease-in-out',
     y: offset,
-    zIndex: 999,
   };
 
   const unselectedStyle = {
@@ -62,18 +91,12 @@ const ImageList: React.FC = () => {
   const displayImages = images.map((img, index) => (
     <motion.div
       key={img.id}
+      data-testid="imageCardWrapper"
       style={selectedIndex === index ? selectedStyle : unselectedStyle}
     >
       <ImageCard {...img} />
     </motion.div>
   ));
-
-  useEffect(() => {
-    (async () => {
-      const api_images = await getLatestImages();
-      setImages(api_images);
-    })();
-  }, []);
 
   return (
     <VStack spacing={0} mb={10} ref={listRef}>

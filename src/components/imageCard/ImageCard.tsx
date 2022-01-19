@@ -24,7 +24,7 @@ const ImageCard: React.FC<RoverImage> = ({
   const isLiked = useSelector((state: RootState) => state.likes[id]);
   const dispatch = useDispatch();
   const [isLikePressed, setLikePressed] = useState(false);
-  const [isLargerThan1024] = useMediaQuery('(min-width: 1024px)');
+  const [isLargerThan768] = useMediaQuery('(min-width: 768px)');
 
   const likeChangeHandler = () => dispatch(toggleLike(id));
 
@@ -37,7 +37,7 @@ const ImageCard: React.FC<RoverImage> = ({
   return (
     <Box shadow="dark-lg" bgColor="gray.200" borderRadius="lg" p={5}>
       <Image
-        boxSize={isLargerThan1024 ? 500 : ''}
+        boxSize={isLargerThan768 ? 500 : ''}
         draggable={false}
         src={img_src}
         alt={'NASA image'}
