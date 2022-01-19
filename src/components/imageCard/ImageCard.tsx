@@ -9,7 +9,7 @@ import {
   useMediaQuery,
 } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
-import { BsStar, BsStarFill } from 'react-icons/bs';
+import { BsImage, BsPinMapFill, BsStar, BsStarFill } from 'react-icons/bs';
 import { useDispatch, useSelector } from 'react-redux';
 import { RoverImage, Waypoint } from '../../common/types';
 import { toggleLike } from '../../redux/likeSlice';
@@ -45,7 +45,13 @@ const ImageCard: React.FC<RoverImage> = (image) => {
   const likeChangeHandler = () => dispatch(toggleLike(image.id));
 
   return (
-    <Box shadow="dark-lg" bgColor="gray.200" borderRadius="lg" p={5}>
+    <Box
+      shadow="dark-lg"
+      bgColor="gray.200"
+      borderRadius="lg"
+      p={5}
+      width="100%"
+    >
       <Box width={isLargerThan768 ? 500 : ''} height="70vh">
         {!mapView && (
           <Image
@@ -71,6 +77,30 @@ const ImageCard: React.FC<RoverImage> = (image) => {
           </Text>
         </Box>
         <Spacer />
+        <Button
+          size="lg"
+          width="3em"
+          variant="unstyled"
+          onClick={() => setMapView(!mapView)}
+          aria-label={`map-${image.id}`}
+        >
+          {!mapView && (
+            <Icon
+              as={BsPinMapFill}
+              color="gray.50"
+              role="img"
+              aria-label="map icon"
+            />
+          )}
+          {mapView && (
+            <Icon
+              as={BsImage}
+              color="gray.50"
+              role="img"
+              aria-label="image icon"
+            />
+          )}
+        </Button>
         <Button
           size="lg"
           width="3em"

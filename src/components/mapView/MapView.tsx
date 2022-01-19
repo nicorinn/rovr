@@ -21,7 +21,7 @@ const MapView: React.FC<MapViewProps> = ({ image, waypoint }) => {
   const selectedWp = `&selected=Waypoints,${coords[1]},${coords[0]}`;
 
   return (
-    <Box height="100%">
+    <Box height="100%" width="100%">
       {isSelected && (
         <iframe
           height="100%"
