@@ -1,5 +1,4 @@
 import { Box, ChakraProvider } from '@chakra-ui/react';
-import React from 'react';
 import Header from '../header';
 import theme from '../../chakra/theme';
 
@@ -9,9 +8,16 @@ import ImageList from '../imageList';
 function App() {
   return (
     <ChakraProvider theme={theme}>
-      <Box className="App">
+      <Box
+        mt="70px"
+        style={{
+          overflowY: 'scroll',
+          scrollSnapType: 'y mandatory',
+          height: '90vh',
+        }}
+      >
         <Header />
-        <Box as="main" pt="80px">
+        <Box as="main" pt={30}>
           <ImageList />
         </Box>
       </Box>

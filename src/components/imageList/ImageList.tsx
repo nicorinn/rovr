@@ -1,14 +1,12 @@
-import { useMediaQuery, VStack } from '@chakra-ui/react';
-import React, { useEffect, useRef, useState, useCallback } from 'react';
+import { Box, useMediaQuery, VStack } from '@chakra-ui/react';
+import React, { useEffect, useRef, useCallback } from 'react';
 import { getLatestImages } from '../../api/roverPhotos.api';
-import { motion, useViewportScroll } from 'framer-motion';
 import ImageCard from '../imageCard';
 import { getWaypoints } from '../../api/nasaMsl.api';
 import { useDispatch, useSelector } from 'react-redux';
 import { setWaypoints } from '../../redux/waypointSlice';
 import { RootState } from '../../redux/store';
 import { setImages, setSelectedIndex } from '../../redux/imageSlice';
-import useDebounce from '../../hooks/useDebounce';
 
 const ImageList: React.FC = () => {
   const dispatch = useDispatch();
@@ -17,18 +15,8 @@ const ImageList: React.FC = () => {
   const selectedIndex = useSelector(
     (state: RootState) => state.images.selectedIndex
   );
-  const [imageSpace, setImageSpace] = useState(0);
-  const [offset, setOffset] = useState(0);
   const listRef = useRef<HTMLDivElement | null>(null);
-  const { scrollY } = useViewportScroll();
   const [isLargerThan768] = useMediaQuery('(min-width: 768px)');
-
-  const debounceRepositionSelected = useDebounce(() => {
-    window.scrollTo({
-      top: imageSpace * selectedIndex,
-    });
-    setOffset(scrollY.get() - selectedIndex * imageSpace);
-  });
 
   const keyPressHandler = useCallback(
     (e: KeyboardEvent) => {
@@ -72,54 +60,14 @@ const ImageList: React.FC = () => {
     })();
   }, [dispatch]);
 
-  // The yProgess value ranges from 0 to 1
-  // Each image is approximately 1/nth of the page
-  useEffect(() => {
-    if (listRef.current) {
-      setImageSpace(listRef.current.scrollHeight / images.length);
-    }
-  }, [images.length]);
-
-  useEffect(
-    () =>
-      scrollY.onChange((y) => {
-        if (imageSpace) {
-          const centeredImgIndex = Math.round(y / imageSpace);
-          if (selectedIndex !== centeredImgIndex) {
-            dispatch(setSelectedIndex(centeredImgIndex));
-          } else {
-            debounceRepositionSelected();
-          }
-        }
-      }),
-    [scrollY, selectedIndex, imageSpace, debounceRepositionSelected, dispatch]
-  );
-
-  const selectedStyle = {
-    scale: 1,
-    opacity: 1,
-    transition: 'all 200ms ease-in-out',
-    y: offset,
-  };
-
-  const unselectedStyle = {
-    scale: isLargerThan768 ? 0.5 : 1,
-    opacity: 0,
-    transition: 'all 200ms ease-in-out',
-  };
-
   const displayImages = images.map((img, index) => (
-    <motion.div
-      key={img.id}
-      data-testid="imageCardWrapper"
-      style={selectedIndex === index ? selectedStyle : unselectedStyle}
-    >
+    <Box key={img.id} data-testid="imageCardWrapper">
       <ImageCard {...img} />
-    </motion.div>
+    </Box>
   ));
 
   return (
-    <VStack spacing={0} mb={10} ref={listRef}>
+    <VStack spacing={10} mb={10} ref={listRef}>
       {displayImages}
     </VStack>
   );

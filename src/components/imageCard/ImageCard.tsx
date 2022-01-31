@@ -5,6 +5,7 @@ import {
   Icon,
   Image,
   Spacer,
+  Stack,
   Text,
   useMediaQuery,
 } from '@chakra-ui/react';
@@ -51,8 +52,12 @@ const ImageCard: React.FC<RoverImage> = (image) => {
       borderRadius="lg"
       p={5}
       width="100%"
+      style={{ scrollSnapStop: 'always', scrollSnapAlign: 'center' }}
     >
-      <Box width={isLargerThan768 ? 500 : ''} height="70vh">
+      <Box
+        width={isLargerThan768 ? 500 : ''}
+        // height={isLargerThan768 ? '' : 'vh'}
+      >
         {!mapView && (
           <Image
             draggable={false}
@@ -67,7 +72,11 @@ const ImageCard: React.FC<RoverImage> = (image) => {
           <MapView image={image} waypoint={nearestWaypoint} />
         )}
       </Box>
-      <Flex align="center" mt={2}>
+      <Stack
+        direction={isLargerThan768 ? 'row' : 'column-reverse'}
+        align="center"
+        mt={2}
+      >
         <Box>
           <Text fontSize={22} color="white">
             {image.camera.full_name}
@@ -76,65 +85,65 @@ const ImageCard: React.FC<RoverImage> = (image) => {
             {image.earth_date}
           </Text>
         </Box>
-        <Spacer />
-        <Flex></Flex>
-        <Button
-          size="lg"
-          width="3em"
-          variant="unstyled"
-          onClick={() => setMapView(!mapView)}
-          aria-label={`map-${image.id}`}
-        >
-          {!mapView && (
-            <Icon
-              as={BsPinMapFill}
-              mt="0.3em"
-              boxSize={'2em'}
-              color="gray.50"
-              role="img"
-              aria-label="map icon"
-            />
-          )}
-          {mapView && (
-            <Icon
-              as={BsImage}
-              mt="0.3em"
-              boxSize={'2em'}
-              color="gray.50"
-              role="img"
-              aria-label="image icon"
-            />
-          )}
-        </Button>
-        <Button
-          size="lg"
-          width="3em"
-          variant="unstyled"
-          onClick={likeChangeHandler}
-          aria-label={`like-${image.id}`}
-        >
-          {!isLiked && (
-            <Icon
-              as={BsStar}
-              boxSize={isLikePressed ? '3.7em' : '2.5em'}
-              color="gray.50"
-              role="img"
-              aria-label="unstarred icon"
-              transition="all 200ms ease-in-out"
-            />
-          )}
-          {isLiked && (
-            <Icon
-              as={BsStarFill}
-              boxSize={isLikePressed ? '3.7em' : '2.5em'}
-              color="red.800"
-              role="img"
-              aria-label="starred icon"
-              transition="all 200ms ease-in-out"
-            />
-          )}
-        </Button>
-      </Flex>
+        <Box>
+          <Button
+            size="lg"
+            width="3em"
+            variant="unstyled"
+            onClick={() => setMapView(!mapView)}
+            aria-label={`map-${image.id}`}
+          >
+            {!mapView && (
+              <Icon
+                as={BsPinMapFill}
+                mt="0.3em"
+                boxSize={'2em'}
+                color="gray.50"
+                role="img"
+                aria-label="map icon"
+              />
+            )}
+            {mapView && (
+              <Icon
+                as={BsImage}
+                mt="0.3em"
+                boxSize={'2em'}
+                color="gray.50"
+                role="img"
+                aria-label="image icon"
+              />
+            )}
+          </Button>
+          <Button
+            size="lg"
+            width="3em"
+            variant="unstyled"
+            onClick={likeChangeHandler}
+            aria-label={`like-${image.id}`}
+          >
+            {!isLiked && (
+              <Icon
+                as={BsStar}
+                boxSize={isLikePressed ? '3.7em' : '2.5em'}
+                color="gray.50"
+                role="img"
+                aria-label="unstarred icon"
+                transition="all 200ms ease-in-out"
+              />
+            )}
+            {isLiked && (
+              <Icon
+                as={BsStarFill}
+                boxSize={isLikePressed ? '3.7em' : '2.5em'}
+                color="red.800"
+                role="img"
+                aria-label="starred icon"
+                transition="all 200ms ease-in-out"
+              />
+            )}
+          </Button>
+        </Box>
+      </Stack>
     </Box>
   );
 };

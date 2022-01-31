@@ -8,9 +8,10 @@ const Header = () => {
       align="center"
       position="fixed"
       width="100%"
-      height="70px"
+      height="10vh"
       bgColor="black"
       zIndex={9999}
+      top={0}
     >
       <Box>
         <Heading color="white">ROVR</Heading>
