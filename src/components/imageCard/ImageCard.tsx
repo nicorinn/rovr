@@ -1,10 +1,8 @@
 import {
   Box,
   Button,
-  Flex,
   Icon,
   Image,
-  Spacer,
   Stack,
   Text,
   useMediaQuery,
@@ -23,7 +21,6 @@ const ImageCard: React.FC<RoverImage> = (image) => {
   const waypoints = useSelector((state: RootState) => state.waypoints);
   const dispatch = useDispatch();
   const [isLikePressed, setLikePressed] = useState(false);
-  const [isLargerThan768] = useMediaQuery('(min-width: 768px)');
   const [nearestWaypoint, setNearestWaypoint] = useState<Waypoint | null>(null);
   const [mapView, setMapView] = useState(false);
 
@@ -51,13 +48,11 @@ const ImageCard: React.FC<RoverImage> = (image) => {
       bgColor="gray.200"
       borderRadius="lg"
       p={5}
+      m={0}
       width="100%"
       style={{ scrollSnapStop: 'always', scrollSnapAlign: 'center' }}
     >
-      <Box
-        width={isLargerThan768 ? 500 : ''}
-        // height={isLargerThan768 ? '' : 'vh'}
-      >
+      <Box width={{ sm: 500, base: '100%' }}>
         {!mapView && (
           <Image
             draggable={false}
@@ -73,9 +68,9 @@ const ImageCard: React.FC<RoverImage> = (image) => {
         )}
       </Box>
       <Stack
-        direction={isLargerThan768 ? 'row' : 'column-reverse'}
+        direction={{ md: 'row', base: 'column-reverse' }}
         align="center"
-        mt={2}
+        mt={5}
       >
         <Box>
           <Text fontSize={22} color="white">

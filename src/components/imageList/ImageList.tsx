@@ -1,6 +1,7 @@
-import { Box, useMediaQuery, VStack } from '@chakra-ui/react';
-import React, { useEffect, useRef, useCallback } from 'react';
+import { Box, VStack } from '@chakra-ui/react';
+import React, { useEffect, useRef, useCallback, useState } from 'react';
 import { getLatestImages } from '../../api/roverPhotos.api';
+import { useViewportScroll } from 'framer-motion';
 import ImageCard from '../imageCard';
 import { getWaypoints } from '../../api/nasaMsl.api';
 import { useDispatch, useSelector } from 'react-redux';
@@ -12,11 +13,12 @@ const ImageList: React.FC = () => {
   const dispatch = useDispatch();
   const waypoints = useSelector((state: RootState) => state.waypoints);
   const images = useSelector((state: RootState) => state.images.imageList);
+  const { scrollY } = useViewportScroll();
+  const [imageSpace, setImageSpace] = useState(0);
   const selectedIndex = useSelector(
     (state: RootState) => state.images.selectedIndex
   );
   const listRef = useRef<HTMLDivElement | null>(null);
-  const [isLargerThan768] = useMediaQuery('(min-width: 768px)');
 
   const keyPressHandler = useCallback(
     (e: KeyboardEvent) => {
@@ -40,6 +42,11 @@ const ImageList: React.FC = () => {
   );
 
   useEffect(() => {
+    document.addEventListener('keyup', keyPressHandler);
+    return () => document.removeEventListener('keyup', keyPressHandler);
+  }, [keyPressHandler]);
+
+  useEffect(() => {
     if (!waypoints.length) {
       (async () => {
         const waypoints = await getWaypoints();
@@ -49,16 +56,32 @@ const ImageList: React.FC = () => {
   }, [dispatch, waypoints.length]);
 
   useEffect(() => {
-    document.addEventListener('keyup', keyPressHandler);
-    return () => document.removeEventListener('keyup', keyPressHandler);
-  }, [keyPressHandler]);
-
-  useEffect(() => {
     (async () => {
       const api_images = await getLatestImages();
       dispatch(setImages(api_images));
     })();
   }, [dispatch]);
+
+  // The yProgess value ranges from 0 to 1
+  // Each image is approximately 1/nth of the page
+  useEffect(() => {
+    if (listRef.current) {
+      setImageSpace(listRef.current.scrollHeight / images.length);
+    }
+  }, [images.length]);
+
+  useEffect(
+    () =>
+      scrollY.onChange((y) => {
+        if (imageSpace) {
+          const centeredImgIndex = Math.round(y / imageSpace);
+          if (selectedIndex !== centeredImgIndex) {
+            dispatch(setSelectedIndex(centeredImgIndex));
+          }
+        }
+      }),
+    [scrollY, selectedIndex, imageSpace, dispatch]
+  );
 
   const displayImages = images.map((img, index) => (
     <Box key={img.id} data-testid="imageCardWrapper">
