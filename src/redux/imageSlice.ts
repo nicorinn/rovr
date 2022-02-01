@@ -7,12 +7,11 @@ import { RoverImage } from '../common/types';
 
 interface ImageState {
   imageList: RoverImage[];
-  selectedIndex: number;
 }
 
 const imageSlice = createSlice<ImageState, SliceCaseReducers<ImageState>>({
   name: 'images',
-  initialState: { imageList: [], selectedIndex: 0 },
+  initialState: { imageList: [] },
   reducers: {
     setImages: (state, action: PayloadAction<RoverImage[]>) => {
       return { ...state, imageList: action.payload };

@@ -10,7 +10,7 @@ import imageSlice from './redux/imageSlice';
 const initialState: RootState = {
   likes: {},
   waypoints: [],
-  images: { imageList: [], selectedIndex: 0 },
+  images: { imageList: [] },
 };
 
 function render(

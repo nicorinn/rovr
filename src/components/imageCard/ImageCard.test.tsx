@@ -1,5 +1,6 @@
+import { within } from '@testing-library/react';
 import React from 'react';
-import { render, screen, fireEvent } from '../../test-utils';
+import { render, screen } from '../../test-utils';
 import ImageCard from './ImageCard';
 
 const testImage = {
@@ -53,5 +54,29 @@ describe('<ImageCard />', () => {
     await screen.findByRole('img', { name: /^starred icon/i });
     likeButton.click();
     await screen.findByRole('img', { name: /unstarred icon/i });
+  });
+
+  test('map button is toggled on click', async () => {
+    render(<ImageCard {...testImage} />);
+
+    const image = screen.getByAltText(/nasa image/i);
+    const mapButton = screen.getByRole('button', {
+      name: /map\-921146/i,
+    });
+    await within(mapButton).findByRole('img', {
+      name: /map icon/i,
+    });
+
+    mapButton.click();
+
+    expect(image).not.toBeInTheDocument();
+    await within(mapButton).findByRole('img', { name: /image icon/i });
+
+    mapButton.click();
+
+    await screen.findByAltText(/nasa image/i);
+    await within(mapButton).findByRole('img', {
+      name: /map icon/i,
+    });
   });
 });

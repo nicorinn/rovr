@@ -4,7 +4,7 @@ import { loadLikes, saveLikes } from './localStorage';
 const testState: RootState = {
   likes: {},
   waypoints: [],
-  images: { imageList: [], selectedIndex: 0 },
+  images: { imageList: [] },
 };
 describe('saveLikes', () => {
   test('saves likes to localStorage', () => {

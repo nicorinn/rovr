@@ -1,7 +1,5 @@
 import { Box } from '@chakra-ui/react';
-import { useSelector } from 'react-redux';
 import { RoverImage, Waypoint } from '../../common/types';
-import { RootState } from '../../redux/store';
 
 interface MapViewProps {
   image: RoverImage;
@@ -14,11 +12,6 @@ const MapView: React.FC<MapViewProps> = ({
   waypoint,
   mapDimensions,
 }) => {
-  const isSelected = useSelector((state: RootState) => {
-    const selectedImage = state.images.imageList[state.images.selectedIndex];
-    return selectedImage.id === image.id;
-  });
-
   const coords = waypoint.geometry.coordinates;
 
   const baseUrl = 'https://mars.nasa.gov/maps/location/?mission=MSL';
@@ -27,14 +20,13 @@ const MapView: React.FC<MapViewProps> = ({
 
   return (
     <Box height="100%" width="100%" minHeight={350} minWidth={350}>
-      {isSelected && (
-        <iframe
-          height={mapDimensions.h}
-          width={mapDimensions.w}
-          title={image.id.toString()}
-          src={baseUrl + coordsUrl + selectedWp}
-        ></iframe>
-      )}
+      <iframe
+        height={mapDimensions.h}
+        width={mapDimensions.w}
+        // title={`map-${image.id.toString()}`}
+        title="iframe"
+        src={baseUrl + coordsUrl + selectedWp}
+      ></iframe>
     </Box>
   );
 };
