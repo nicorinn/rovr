@@ -6,9 +6,14 @@ import { RootState } from '../../redux/store';
 interface MapViewProps {
   image: RoverImage;
   waypoint: Waypoint;
+  mapDimensions: { w: number; h: number };
 }
 
-const MapView: React.FC<MapViewProps> = ({ image, waypoint }) => {
+const MapView: React.FC<MapViewProps> = ({
+  image,
+  waypoint,
+  mapDimensions,
+}) => {
   const isSelected = useSelector((state: RootState) => {
     const selectedImage = state.images.imageList[state.images.selectedIndex];
     return selectedImage.id === image.id;
@@ -24,8 +29,8 @@ const MapView: React.FC<MapViewProps> = ({ image, waypoint }) => {
     <Box height="100%" width="100%" minHeight={350} minWidth={350}>
       {isSelected && (
         <iframe
-          height="400px"
-          width="100%"
+          height={mapDimensions.h}
+          width={mapDimensions.w}
           title={image.id.toString()}
           src={baseUrl + coordsUrl + selectedWp}
         ></iframe>

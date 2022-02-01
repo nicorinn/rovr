@@ -17,12 +17,9 @@ const imageSlice = createSlice<ImageState, SliceCaseReducers<ImageState>>({
     setImages: (state, action: PayloadAction<RoverImage[]>) => {
       return { ...state, imageList: action.payload };
     },
-    setSelectedIndex: (state, action: PayloadAction<number>) => {
-      return { ...state, selectedIndex: action.payload };
-    },
   },
 });
 
-export const { setImages, setSelectedIndex } = imageSlice.actions;
+export const { setImages } = imageSlice.actions;
 
 export default imageSlice.reducer;

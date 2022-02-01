@@ -1,13 +1,11 @@
+import { Box, Button, Icon, Image, Stack, Text } from '@chakra-ui/react';
 import {
-  Box,
-  Button,
-  Icon,
-  Image,
-  Stack,
-  Text,
-  useMediaQuery,
-} from '@chakra-ui/react';
-import { useEffect, useState } from 'react';
+  LegacyRef,
+  MutableRefObject,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 import { BsImage, BsPinMapFill, BsStar, BsStarFill } from 'react-icons/bs';
 import { useDispatch, useSelector } from 'react-redux';
 import { RoverImage, Waypoint } from '../../common/types';
@@ -23,6 +21,8 @@ const ImageCard: React.FC<RoverImage> = (image) => {
   const [isLikePressed, setLikePressed] = useState(false);
   const [nearestWaypoint, setNearestWaypoint] = useState<Waypoint | null>(null);
   const [mapView, setMapView] = useState(false);
+  const [mapDimensions, setMapDimensions] = useState({ w: 0, h: 0 });
+  const imageRef = useRef(null) as MutableRefObject<HTMLImageElement | null>;
 
   useEffect(() => {
     if (!nearestWaypoint && waypoints.length) {
@@ -40,6 +40,15 @@ const ImageCard: React.FC<RoverImage> = (image) => {
     return () => clearTimeout(likePressedTimer);
   }, [isLiked]);
 
+  useEffect(() => {
+    if (imageRef.current) {
+      setMapDimensions({
+        w: imageRef.current.width,
+        h: imageRef.current.height,
+      });
+    }
+  }, [imageRef]);
+
   const likeChangeHandler = () => dispatch(toggleLike(image.id));
 
   return (
@@ -55,6 +64,7 @@ const ImageCard: React.FC<RoverImage> = (image) => {
       <Box width={{ sm: 500, base: '100%' }}>
         {!mapView && (
           <Image
+            ref={imageRef as LegacyRef<HTMLImageElement>}
             draggable={false}
             src={image.img_src}
             alt={'NASA image'}
@@ -64,7 +74,11 @@ const ImageCard: React.FC<RoverImage> = (image) => {
           />
         )}
         {mapView && nearestWaypoint && (
-          <MapView image={image} waypoint={nearestWaypoint} />
+          <MapView
+            image={image}
+            waypoint={nearestWaypoint}
+            mapDimensions={mapDimensions}
+          />
         )}
       </Box>
       <Stack
