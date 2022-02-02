@@ -22,6 +22,7 @@ const ImageCard: React.FC<RoverImage> = (image) => {
   const [nearestWaypoint, setNearestWaypoint] = useState<Waypoint | null>(null);
   const [mapView, setMapView] = useState(false);
   const [mapDimensions, setMapDimensions] = useState({ w: 0, h: 0 });
+  const [loaded, setLoaded] = useState(false);
   const imageRef = useRef(null) as MutableRefObject<HTMLImageElement | null>;
 
   useEffect(() => {
@@ -42,13 +43,13 @@ const ImageCard: React.FC<RoverImage> = (image) => {
 
   useEffect(() => {
     const img = imageRef.current;
-    if (img && img.width && img.height) {
+    if (loaded && img && img.width && img.height) {
       setMapDimensions({
         w: img.width,
         h: img.height,
       });
     }
-  }, [imageRef]);
+  }, [imageRef, loaded]);
 
   const likeChangeHandler = () => dispatch(toggleLike(image.id));
 
@@ -60,7 +61,11 @@ const ImageCard: React.FC<RoverImage> = (image) => {
       p={5}
       m={0}
       width="100%"
-      style={{ scrollSnapStop: 'always', scrollSnapAlign: 'center' }}
+      style={{
+        scrollSnapStop: 'always',
+        scrollSnapAlign: 'center',
+        display: loaded ? '' : 'hidden',
+      }}
     >
       <Box width={{ sm: 500, base: '100%' }}>
         {!mapView && (
@@ -72,6 +77,7 @@ const ImageCard: React.FC<RoverImage> = (image) => {
             fit="scale-down"
             borderRadius="lg"
             shadow="dark-lg"
+            onLoad={() => setLoaded(true)}
           />
         )}
         {mapView && nearestWaypoint && (
