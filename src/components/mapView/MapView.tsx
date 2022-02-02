@@ -1,5 +1,5 @@
 import { Box, Flex, Spinner } from '@chakra-ui/react';
-import { Icon, LatLngTuple } from 'leaflet';
+import { LatLngTuple } from 'leaflet';
 import { useState, useEffect } from 'react';
 import {
   MapContainer,
@@ -11,7 +11,11 @@ import {
 import { useSelector } from 'react-redux';
 import { RoverImage, Waypoint } from '../../common/types';
 import { RootState } from '../../redux/store';
-import { findNearestWaypoint, reverseLatLngTuple } from './mapView.utils';
+import {
+  findNearestWaypoint,
+  MarkerIcon,
+  reverseLatLngTuple,
+} from './mapView.utils';
 
 interface MapViewProps {
   image: RoverImage;
@@ -97,7 +101,7 @@ const MapView: React.FC<MapViewProps> = ({ image, mapDimensions }) => {
             />
           ))}
 
-          <Marker position={center}>
+          <Marker position={center} icon={MarkerIcon}>
             <Popup>
               Sol: {nearestWaypoint && nearestWaypoint.properties.sol}
             </Popup>

@@ -1,4 +1,4 @@
-import { LatLngTuple } from 'leaflet';
+import { icon, LatLngTuple } from 'leaflet';
 import { Waypoint } from '../../common/types';
 
 /**
@@ -25,3 +25,8 @@ export function findNearestWaypoint(
 export function reverseLatLngTuple([n1, n2]: LatLngTuple) {
   return [n2, n1] as LatLngTuple;
 }
+
+export const MarkerIcon = icon({
+  iconUrl: 'https://mars.nasa.gov/mmgis-maps/MSL/Layers/icon/MSL_icon.png',
+  iconSize: [65, 64],
+});
