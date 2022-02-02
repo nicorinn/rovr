@@ -5,6 +5,7 @@ import ImageList from '../imageList';
 
 import './App.css';
 import { Route, Routes } from 'react-router-dom';
+import { MarsGlobe } from '../marsGlobe';
 
 function App() {
   return (
@@ -15,7 +16,7 @@ function App() {
           <Routes>
             <Route path="/" element={<ImageList />} />
             <Route path="latest" element={<ImageList />} />
-            <Route path="globe" element={<div>Test</div>} />
+            <Route path="globe" element={<MarsGlobe />} />
             <Route path="about" element={<div>About</div>} />
           </Routes>
         </Box>

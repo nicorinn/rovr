@@ -6,6 +6,7 @@ import { RootState } from './redux/store';
 import likeSlice from './redux/likeSlice';
 import roverSlice from './redux/roverSlice';
 import imageSlice from './redux/imageSlice';
+import { BrowserRouter } from 'react-router-dom';
 
 const initialState: RootState = {
   likes: {},
@@ -29,7 +30,11 @@ function render(
   }: any = {}
 ) {
   const Wrapper: React.FC = ({ children }) => {
-    return <Provider store={store}>{children}</Provider>;
+    return (
+      <Provider store={store}>
+        <BrowserRouter>{children}</BrowserRouter>
+      </Provider>
+    );
   };
   return rtlRender(ui, { wrapper: Wrapper, ...renderOptions });
 }
