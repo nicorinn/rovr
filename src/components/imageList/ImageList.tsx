@@ -2,15 +2,17 @@ import { Box, VStack } from '@chakra-ui/react';
 import { useEffect } from 'react';
 import { getLatestImages } from '../../api/roverPhotos.api';
 import ImageCard from '../imageCard';
-import { getWaypoints } from '../../api/nasaMsl.api';
+import { getRoverPath, getWaypoints } from '../../api/nasaMsl.api';
 import { useDispatch, useSelector } from 'react-redux';
-import { setWaypoints } from '../../redux/waypointSlice';
+import { setRoverPath, setWaypoints } from '../../redux/roverSlice';
 import { RootState } from '../../redux/store';
 import { setImages } from '../../redux/imageSlice';
 
 const ImageList = () => {
   const dispatch = useDispatch();
-  const waypoints = useSelector((state: RootState) => state.waypoints);
+  const waypoints = useSelector(
+    (state: RootState) => state.roverData.waypoints
+  );
   const images = useSelector((state: RootState) => state.images.imageList);
 
   // Fetch data
@@ -18,7 +20,9 @@ const ImageList = () => {
     if (!waypoints.length) {
       (async () => {
         const waypoints = await getWaypoints();
+        const roverPath = await getRoverPath();
         dispatch(setWaypoints(waypoints));
+        dispatch(setRoverPath(roverPath));
       })();
     }
   }, [dispatch, waypoints.length]);

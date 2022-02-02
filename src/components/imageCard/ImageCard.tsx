@@ -12,28 +12,16 @@ import { RoverImage, Waypoint } from '../../common/types';
 import { toggleLike } from '../../redux/likeSlice';
 import { RootState } from '../../redux/store';
 import MapView from '../mapView';
-import { findNearestWaypoint } from './imageCard.utils';
+import { findNearestWaypoint } from '../mapView/mapView.utils';
 
 const ImageCard: React.FC<RoverImage> = (image) => {
   const isLiked = useSelector((state: RootState) => state.likes[image.id]);
-  const waypoints = useSelector((state: RootState) => state.waypoints);
   const dispatch = useDispatch();
   const [isLikePressed, setLikePressed] = useState(false);
-  const [nearestWaypoint, setNearestWaypoint] = useState<Waypoint | null>(null);
   const [mapView, setMapView] = useState(false);
   const [mapDimensions, setMapDimensions] = useState({ w: 0, h: 0 });
   const [loaded, setLoaded] = useState(false);
   const imageRef = useRef(null) as MutableRefObject<HTMLImageElement | null>;
-
-  useEffect(() => {
-    if (!nearestWaypoint && waypoints.length) {
-      const nearestWp = waypoints.reduce(
-        (prev, current) => findNearestWaypoint(prev, current, image.sol),
-        waypoints[0]
-      );
-      setNearestWaypoint(nearestWp);
-    }
-  }, [waypoints, image.sol, nearestWaypoint]);
 
   useEffect(() => {
     setLikePressed(true);
@@ -80,13 +68,7 @@ const ImageCard: React.FC<RoverImage> = (image) => {
             onLoad={() => setLoaded(true)}
           />
         )}
-        {mapView && nearestWaypoint && (
-          <MapView
-            image={image}
-            waypoint={nearestWaypoint}
-            mapDimensions={mapDimensions}
-          />
-        )}
+        {mapView && <MapView image={image} mapDimensions={mapDimensions} />}
       </Box>
       <Flex
         direction={{ md: 'row', base: 'column-reverse' }}

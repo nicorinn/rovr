@@ -3,7 +3,7 @@ import { loadLikes, saveLikes } from './localStorage';
 
 const testState: RootState = {
   likes: {},
-  waypoints: [],
+  roverData: { waypoints: [], path: [] },
   images: { imageList: [] },
 };
 describe('saveLikes', () => {

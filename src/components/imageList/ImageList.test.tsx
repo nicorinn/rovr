@@ -1,4 +1,4 @@
-import { render, screen, fireEvent } from '../../test-utils';
+import { render, screen } from '../../test-utils';
 import ImageList from './ImageList';
 
 jest.mock('../../api/roverPhotos.api', () => {

@@ -4,12 +4,12 @@ import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
 import { RootState } from './redux/store';
 import likeSlice from './redux/likeSlice';
-import waypointSlice from './redux/waypointSlice';
+import roverSlice from './redux/roverSlice';
 import imageSlice from './redux/imageSlice';
 
 const initialState: RootState = {
   likes: {},
-  waypoints: [],
+  roverData: { waypoints: [], path: [] },
   images: { imageList: [] },
 };
 
@@ -20,7 +20,7 @@ function render(
     store = configureStore({
       reducer: {
         likes: likeSlice,
-        waypoints: waypointSlice,
+        roverData: roverSlice,
         images: imageSlice,
       },
       preloadedState,

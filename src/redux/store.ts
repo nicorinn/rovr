@@ -3,12 +3,12 @@ import throttle from 'lodash/throttle';
 import imageSlice from './imageSlice';
 import likeSlice from './likeSlice';
 import { saveLikes } from './utils/localStorage';
-import waypointSlice from './waypointSlice';
+import roverSlice from './roverSlice';
 
 export const store = configureStore({
   reducer: {
     likes: likeSlice,
-    waypoints: waypointSlice,
+    roverData: roverSlice,
     images: imageSlice,
   },
 });

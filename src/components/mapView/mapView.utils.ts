@@ -1,3 +1,4 @@
+import { LatLngTuple } from 'leaflet';
 import { Waypoint } from '../../common/types';
 
 /**
@@ -19,4 +20,8 @@ export function findNearestWaypoint(
   } else {
     return nearest;
   }
+}
+
+export function reverseLatLngTuple([n1, n2]: LatLngTuple) {
+  return [n2, n1] as LatLngTuple;
 }
