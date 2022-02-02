@@ -1,4 +1,12 @@
-import { Box, Button, Flex, Icon, Image, Text } from '@chakra-ui/react';
+import {
+  Box,
+  Button,
+  Flex,
+  Icon,
+  Image,
+  Spinner,
+  Text,
+} from '@chakra-ui/react';
 import {
   LegacyRef,
   MutableRefObject,
@@ -18,7 +26,7 @@ const ImageCard: React.FC<RoverImage> = (image) => {
   const dispatch = useDispatch();
   const [isLikePressed, setLikePressed] = useState(false);
   const [mapView, setMapView] = useState(false);
-  const [mapDimensions, setMapDimensions] = useState({ w: 0, h: 0 });
+  const [mapDimensions, setMapDimensions] = useState({ w: 300, h: 350 });
   const [loaded, setLoaded] = useState(false);
   const imageRef = useRef(null) as MutableRefObject<HTMLImageElement | null>;
 
@@ -64,10 +72,26 @@ const ImageCard: React.FC<RoverImage> = (image) => {
             fit="scale-down"
             borderRadius="lg"
             shadow="dark-lg"
+            display={loaded ? '' : 'none'}
             onLoad={() => setLoaded(true)}
           />
         )}
-        {mapView && <MapView image={image} mapDimensions={mapDimensions} />}
+        {!mapView && !loaded && (
+          <Flex
+            justifyContent="center"
+            alignItems="center"
+            height={350}
+            minWidth={300}
+            width="100%"
+          >
+            <Spinner size="xl" color="red.600" />
+          </Flex>
+        )}
+        {mapView && (
+          <Flex justifyContent="center">
+            <MapView image={image} mapDimensions={mapDimensions} />
+          </Flex>
+        )}
       </Box>
       <Flex
         direction={{ md: 'row', base: 'column-reverse' }}

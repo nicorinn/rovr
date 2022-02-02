@@ -50,7 +50,13 @@ const MapView: React.FC<MapViewProps> = ({ image, mapDimensions }) => {
     '<a href="https://github.com/NASA-AMMOS/MMGIS/">NASA MMGIS</a>';
 
   return (
-    <Box width={mapDimensions.w} height={mapDimensions.h} shadow="dark-lg">
+    <Box
+      width={mapDimensions.w}
+      height={mapDimensions.h}
+      minWidth={250}
+      minHeight={250}
+      shadow="dark-lg"
+    >
       {!center && (
         <Flex
           justifyContent="center"
@@ -65,7 +71,12 @@ const MapView: React.FC<MapViewProps> = ({ image, mapDimensions }) => {
         <MapContainer
           center={center}
           zoom={13}
-          style={{ height: mapDimensions.h, width: mapDimensions.w }}
+          style={{
+            height: mapDimensions.h,
+            width: mapDimensions.w,
+            minWidth: 250,
+            minHeight: 250,
+          }}
         >
           <TileLayer
             className="gale crater map"
