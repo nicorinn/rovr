@@ -41,10 +41,11 @@ const ImageCard: React.FC<RoverImage> = (image) => {
   }, [isLiked]);
 
   useEffect(() => {
-    if (imageRef.current) {
+    const img = imageRef.current;
+    if (img && img.width && img.height) {
       setMapDimensions({
-        w: imageRef.current.width,
-        h: imageRef.current.height,
+        w: img.width,
+        h: img.height,
       });
     }
   }, [imageRef]);

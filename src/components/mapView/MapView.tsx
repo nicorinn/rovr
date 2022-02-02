@@ -19,12 +19,11 @@ const MapView: React.FC<MapViewProps> = ({
   const selectedWp = `&selected=Waypoints,${coords[1]},${coords[0]}`;
 
   return (
-    <Box height="100%" width="100%" minHeight={350} minWidth={350}>
+    <Box height="100%" width="100%">
       <iframe
         height={mapDimensions.h}
         width={mapDimensions.w}
-        // title={`map-${image.id.toString()}`}
-        title="iframe"
+        title={`mmgis-${image.id.toString()}`}
         src={baseUrl + coordsUrl + selectedWp}
       ></iframe>
     </Box>
