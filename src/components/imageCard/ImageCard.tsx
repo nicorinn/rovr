@@ -1,4 +1,4 @@
-import { Box, Button, Icon, Image, Stack, Text } from '@chakra-ui/react';
+import { Box, Button, Flex, Icon, Image, Text } from '@chakra-ui/react';
 import {
   LegacyRef,
   MutableRefObject,
@@ -82,16 +82,17 @@ const ImageCard: React.FC<RoverImage> = (image) => {
           />
         )}
       </Box>
-      <Stack
+      <Flex
         direction={{ md: 'row', base: 'column-reverse' }}
+        justifyContent={{ md: 'space-between' }}
         align="center"
         mt={5}
       >
         <Box>
-          <Text fontSize={22} color="white">
+          <Text fontSize={18} color="white">
             {image.camera.full_name}
           </Text>
-          <Text fontSize={16} color="white">
+          <Text fontSize={14} color="white">
             {image.earth_date}
           </Text>
         </Box>
@@ -153,7 +154,7 @@ const ImageCard: React.FC<RoverImage> = (image) => {
             )}
           </Button>
         </Box>
-      </Stack>
+      </Flex>
     </Box>
   );
 };

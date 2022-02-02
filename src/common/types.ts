@@ -1,3 +1,5 @@
+import { LatLngTuple } from 'leaflet';
+
 export interface Camera {
   id: number;
   name: string;
@@ -22,8 +24,6 @@ export interface RoverImage {
   rover: Rover;
 }
 
-type WaypointCoordinate = [number, number];
-
 export interface Waypoint {
   type: string;
   properties: {
@@ -34,5 +34,5 @@ export interface Waypoint {
     dist_mi: number;
     drivetype: string;
   };
-  geometry: { type: string; coordinates: WaypointCoordinate };
+  geometry: { type: string; coordinates: LatLngTuple };
 }
