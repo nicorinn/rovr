@@ -1,10 +1,15 @@
-# :warning: This is a work in progress	:warning:	
+# :warning: This is a work in progress :warning:
 
 # ROVR
 
-Hello! This is my project for the Shopify Frontend Development Intern Challenge. As listed in the technical requirements, this site retrieves images from one of NASA's APIs. I chose the Curiosity Rover's image list.
+Hello! This site retrieves images from the NASA the Curiosity Rover's image list [https://github.com/chrisccerami/mars-photo-api](API). For now, only the images from the latest day are displayed.
 
-The site displays the day's images, along with maps that show the location where they were taken.
+The site displays the day's images, along with a map that show the location where they were taken.
+
+### Next steps
+
+- [ ] Add a new page in which the date can be selected
+- [ ] Remove images that are too similar
 
 ## Technologies used
 
@@ -12,7 +17,8 @@ The site displays the day's images, along with maps that show the location where
 - Typescript
 - ChakraUI component library
 - Redux Toolkit (only to show that I know how to use it, since it's a pretty small project)
-- [NASA-AMMOS/MMGIS](https://github.com/NASA-AMMOS/MMGIS) for the map
+- [React Leaflet](https://github.com/PaulLeCam/react-leaflet)
+- [NASA-AMMOS/MMGIS](https://github.com/NASA-AMMOS/MMGIS) for the map tiles and waypoints
 
 ### Getting Started with Create React App
 

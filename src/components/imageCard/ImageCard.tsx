@@ -8,11 +8,10 @@ import {
 } from 'react';
 import { BsImage, BsPinMapFill, BsStar, BsStarFill } from 'react-icons/bs';
 import { useDispatch, useSelector } from 'react-redux';
-import { RoverImage, Waypoint } from '../../common/types';
+import { RoverImage } from '../../common/types';
 import { toggleLike } from '../../redux/likeSlice';
 import { RootState } from '../../redux/store';
 import MapView from '../mapView';
-import { findNearestWaypoint } from '../mapView/mapView.utils';
 
 const ImageCard: React.FC<RoverImage> = (image) => {
   const isLiked = useSelector((state: RootState) => state.likes[image.id]);
