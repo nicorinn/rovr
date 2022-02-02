@@ -1,4 +1,5 @@
 import { Box, Flex, Heading } from '@chakra-ui/react';
+import { Link } from 'react-router-dom';
 
 const Header = () => {
   return (
@@ -14,7 +15,9 @@ const Header = () => {
       top={0}
     >
       <Box>
-        <Heading color="white">ROVR</Heading>
+        <Link to="/">
+          <Heading color="white">ROVR</Heading>
+        </Link>
       </Box>
     </Flex>
   );

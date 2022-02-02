@@ -4,6 +4,7 @@ import theme from '../../chakra/theme';
 import ImageList from '../imageList';
 
 import './App.css';
+import { Route, Routes } from 'react-router-dom';
 
 function App() {
   return (
@@ -11,7 +12,11 @@ function App() {
       <Box>
         <Header />
         <Box as="main" pt="10vh">
-          <ImageList />
+          <Routes>
+            <Route path="/" element={<ImageList />} />
+            <Route path="latest" element={<ImageList />} />
+            <Route path="globe" element={<div>Test</div>} />
+          </Routes>
         </Box>
       </Box>
     </ChakraProvider>
