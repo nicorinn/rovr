@@ -16,6 +16,7 @@ function App() {
             <Route path="/" element={<ImageList />} />
             <Route path="latest" element={<ImageList />} />
             <Route path="globe" element={<div>Test</div>} />
+            <Route path="about" element={<div>About</div>} />
           </Routes>
         </Box>
       </Box>
