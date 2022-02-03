@@ -31,6 +31,8 @@ const theme = extendTheme({
   components: {
     Button: { baseStyle: { _focus: { boxShadow: 'none' }, color: 'white' } },
     Text: { baseStyle: { color: 'white' } },
+    Heading: { baseStyle: { color: 'white' } },
+    Link: { baseStyle: { color: 'red.200' } },
   },
 });
 

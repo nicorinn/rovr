@@ -27,7 +27,7 @@ const Header = () => {
         aria-label="Menu"
         color="teal"
         size="lg"
-        icon={<RiMenu4Fill color="#F43E5C" />}
+        icon={<RiMenu4Fill color="#F43E5C" size={32} />}
         variant="ghost"
       />
       <MenuList borderRadius={5} bg="black" border="none" height="90vh">
