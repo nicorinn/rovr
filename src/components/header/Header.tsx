@@ -34,9 +34,7 @@ const Header = () => {
         <VStack spacing={5}>
           <Link to="latest">
             <MenuItem
-              color={
-                location.pathname === '/latest' || '/' ? 'red.200' : 'white'
-              }
+              color={location.pathname === '/latest' ? 'red.200' : 'white'}
               fontSize="20"
             >
               LATEST IMAGES
@@ -55,7 +53,7 @@ const Header = () => {
               color={location.pathname === '/about' ? 'red.200' : 'white'}
               fontSize="20"
             >
-              3D GLOBE
+              ABOUT
             </MenuItem>
           </Link>
         </VStack>

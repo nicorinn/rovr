@@ -19,6 +19,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RoverImage } from '../../common/types';
 import { toggleLike } from '../../redux/likeSlice';
 import { RootState } from '../../redux/store';
+import { LoadingSpinner } from '../loadingSpinner';
 import MapView from '../mapView';
 
 const ImageCard: React.FC<RoverImage> = (image) => {
@@ -31,9 +32,11 @@ const ImageCard: React.FC<RoverImage> = (image) => {
   const imageRef = useRef(null) as MutableRefObject<HTMLImageElement | null>;
 
   useEffect(() => {
-    setLikePressed(true);
-    const likePressedTimer = setTimeout(() => setLikePressed(false), 100);
-    return () => clearTimeout(likePressedTimer);
+    if (isLiked) {
+      setLikePressed(true);
+      const likePressedTimer = setTimeout(() => setLikePressed(false), 100);
+      return () => clearTimeout(likePressedTimer);
+    }
   }, [isLiked]);
 
   useEffect(() => {
@@ -77,15 +80,7 @@ const ImageCard: React.FC<RoverImage> = (image) => {
           />
         )}
         {!mapView && !loaded && (
-          <Flex
-            justifyContent="center"
-            alignItems="center"
-            height={350}
-            minWidth={300}
-            width="100%"
-          >
-            <Spinner size="xl" color="red.600" />
-          </Flex>
+          <LoadingSpinner minHeight={350} minWidth={300} />
         )}
         {mapView && (
           <Flex justifyContent="center">

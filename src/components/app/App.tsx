@@ -2,11 +2,11 @@ import { Box, ChakraProvider } from '@chakra-ui/react';
 import Header from '../header';
 import theme from '../../chakra/theme';
 import ImageList from '../imageList';
+import { Route, Routes } from 'react-router-dom';
+import { About } from '../about';
+import { MarsGlobe } from '../marsGlobe';
 
 import './App.css';
-import { Route, Routes } from 'react-router-dom';
-import { MarsGlobe } from '../marsGlobe';
-import { About } from '../about';
 
 function App() {
   return (

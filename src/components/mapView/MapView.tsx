@@ -11,6 +11,7 @@ import {
 import { useSelector } from 'react-redux';
 import { RoverImage, Waypoint } from '../../common/types';
 import { RootState } from '../../redux/store';
+import { LoadingSpinner } from '../loadingSpinner';
 import {
   findNearestWaypoint,
   MarkerIcon,
@@ -54,17 +55,12 @@ const MapView: React.FC<MapViewProps> = ({ image, mapDimensions }) => {
       width={mapDimensions.w}
       height={mapDimensions.h}
       minWidth={250}
-      minHeight={250}
+      minHeight={150}
       shadow="dark-lg"
     >
       {!center && (
-        <Flex
-          justifyContent="center"
-          alignItems="center"
-          height="100%"
-          width="100%"
-        >
-          <Spinner size="xl" color="red.600" />
+        <Flex height="100%" width="100%">
+          <LoadingSpinner minHeight={350} minWidth={300} />
         </Flex>
       )}
       {center && (
