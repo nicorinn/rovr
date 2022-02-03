@@ -36,8 +36,6 @@ describe('<ImageList />', () => {
   test('displays images', async () => {
     render(<ImageList />);
 
-    expect(
-      await screen.findAllByRole(/img/, { name: /nasa image/i })
-    ).toHaveLength(3);
+    expect(await screen.findAllByAltText(/nasa image/i)).toHaveLength(3);
   });
 });

@@ -35,9 +35,9 @@ describe('<ImageCard />', () => {
     screen.getByText(/2022-01-16/i);
   });
 
-  test('displays alt text', () => {
+  test('displays alt text', async () => {
     render(<ImageCard {...testImage} />);
-    screen.getByAltText(/nasa image/i);
+    await screen.findByAltText(/nasa image/i);
   });
 
   test('displays like button', () => {
